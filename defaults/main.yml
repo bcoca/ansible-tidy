@@ -1,0 +1,6 @@
+---
+# defaults file for ansible-tiny
+tidy_handler: tidy_show
+# default registered vars
+tidy_existing: []
+tidy_removed: []

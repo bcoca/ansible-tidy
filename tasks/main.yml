@@ -1,0 +1,17 @@
+- name: Verify we got tidy_expected and tidy_path
+  assert:
+    that:
+        - tidy_path is defined
+        - tidy_expected is defined
+        - (tidy_expected|length) > 0
+
+- name: Find existing files in path
+  find: paths="{{tidy_path}}"
+  register: tidy_existing
+
+- name: Delete unwanted files
+  file: path={{item.path}} state=absent
+  when: item.path|basename not in tidy_expected
+  with_items: “{{tidy_existing.files|default([])}}”
+  register: tidy_removed
+  notify: "{{tidy_handler}}"
