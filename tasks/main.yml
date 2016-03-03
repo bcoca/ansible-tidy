@@ -1,9 +1,10 @@
 - name: Verify we got tidy_expected and tidy_path
   assert:
-    that:
-        - tidy_path is defined
-        - tidy_expected is defined
-        - (tidy_expected|length) > 0
+    that: "{{item}}"
+  with_items:
+        - 'tidy_path is defined'
+        - 'tidy_expected is defined'
+        - '(tidy_expected|length) > 0'
 
 - name: Find existing files in path
   find: paths="{{tidy_path}}"
